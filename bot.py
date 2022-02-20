@@ -31,6 +31,7 @@ def qrcode_sets(link):
   qr = qrcode.make(str(link))
   qr.save('qrcode.png')
 
+  
 @dp.message_handler(lambda f: f.text == 'QRcode')
 async def create_QRcode(message: types.message):
 
@@ -40,6 +41,7 @@ async def create_QRcode(message: types.message):
   await message.answer('Введите ссылку...', reply_markup=markup)
   await setQRcodeState.user_link.set()
 
+  
 @dp.message_handler(state=setQRcodeState.user_link)
 async def set_qrcode(message: types.message, state: FSMContext):
   async with state.proxy() as date:
@@ -58,6 +60,7 @@ async def set_qrcode(message: types.message, state: FSMContext):
 
     await state.finish()
 
+    
 @dp.callback_query_handler(lambda m: m.data == 'cancel',state=setQRcodeState.user_link)
 async def cancel_check_age(message: types.CallbackQuery, state: FSMContext):
   await message.message.delete()
